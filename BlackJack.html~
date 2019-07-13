@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+</style>
+</head>
+
+<body>
+
+<p>The goal of this page is to make a game of black Jack</p>
+
+
+
+<script>
+  let deck={};
+  deck.draw = function() {
+    card = Math.floor(Math.random()*52);
+    console.log(`a new card has been drawn '${card}'`);
+    return card
+  }
+
+  let player={hand:[]};
+  hand.hit = function() {
+  card = deck.draw();
+  hand[hand.length]= card;
+  }
+  hand.checkWin = function() {
+    
+  }
+  let player1 = {hit, checkWin};
+  let player2 = {hit, checkWin};
+
+  deck.draw();
+</script>
+
+</body>
+
+</html>
