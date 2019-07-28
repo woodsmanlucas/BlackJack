@@ -17,6 +17,14 @@
 onclick="document.getElementById('hand1').innerHTML = player1.hit(); ">
   Hit Me!</button>
 
+  <h2>Player 2</h2>
+
+  <p id="hand2"> </p>
+
+<button type="button"
+onclick="document.getElementById('hand2').innerHTML = player2.hit(); ">
+  Hit Me!</button>
+
 
 <script>
   
@@ -72,25 +80,20 @@ onclick="document.getElementById('hand1').innerHTML = player1.hit(); ">
   card = deck.draw();
   this.hand[this.hand.length]= card;
   var c;
-  var string;
+  var string ="";
   var suit;
   var card;
   
     for (c in this.hand) {
        card = identifyCard(this.hand[c]%13);
        suit = identifySuit(Math.floor(this.hand[c]/13));
-      string = `${suit}\n\n\t\t${card}
-      \n\n\t\t\t\t ${suit}`
-  return string
+      string += `${card} ${suit}   `
   }
+  return string
   }
   }
   let player1 = new player();
   let player2 = new player();
-
-  player1.hit();
-  player1.hit();
-  
 </script>
 
 </body>
