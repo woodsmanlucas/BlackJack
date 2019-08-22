@@ -29,16 +29,16 @@
   function identifySuit(suit) {
     switch(suit) {
   case 0:
-    return "Diamonds";
+    return "&diams;";
   break;
   case 1:
-    return "hearts";
+    return "&hearts;";
   break;
   case 2:
-    return "clubs";
+    return "&clubs;";
   break;
   case 3:
-    return "spades";
+    return "&spades;";
   break;
   }
   }
