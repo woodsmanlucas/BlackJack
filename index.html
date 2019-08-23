@@ -9,6 +9,8 @@
 
   <p>The goal of this page is to make a game of black Jack</p>
 
+  <h2 id="win"></h2>
+
   <h2>Player 1</h2>
 
   <p id="hand1"> </p>
@@ -16,6 +18,9 @@
 <button type="button"
 onclick="document.getElementById('hand1').innerHTML = player1.hit(); ">
   Hit Me!</button>
+<button type="button"
+onclick="document.getElementById('hand1').innerHTML = player1.fold(); ">
+  Fold.</button>
 
   <h2>Player 2</h2>
 
@@ -24,7 +29,9 @@ onclick="document.getElementById('hand1').innerHTML = player1.hit(); ">
 <button type="button"
 onclick="document.getElementById('hand2').innerHTML = player2.hit(); ">
   Hit Me!</button>
-
+<button type="button"
+onclick="document.getElementById('hand1').innerHTML = player2.fold(); ">
+  Fold.</button>
 
 <script src="BlackJack.js"></script>
 
