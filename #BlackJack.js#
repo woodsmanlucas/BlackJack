@@ -43,7 +43,6 @@
   }
   }
 
-
   var player = class player {
   constructor() {
   this.hand = [];
@@ -63,9 +62,6 @@
   }
   return string
   }
-
-      fold() {
-	  
   }
   let player1 = new player();
   let player2 = new player();

@@ -63,8 +63,8 @@
   return string
   }
       
-  function fold(array){
-    function find(array, sum){
+  fold(array){
+      function find(array, sum){
 	if (array.length != 0) {
 	var card = array.pop();
 	if (card == 1) {
@@ -77,10 +77,11 @@
 	else {
 	    return sum;
 	}
-    }
-    return find(array, 0);
-}
-
+      }
+      return find(array, 0);
   }
+  }
+
+
   let player1 = new player();
   let player2 = new player();
