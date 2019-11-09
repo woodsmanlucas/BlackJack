@@ -1,4 +1,50 @@
+var player = class player {
+  constructor() {
+  this.hand = [];
+  }
+  hit() {
+  card = deck.draw();
+  this.hand[this.hand.length]= card;
+  var c;
+  var string ="";
+  var suit;
+  var card;
   
+    for (c in this.hand) {
+       card = identifyCard(this.hand[c]%13);
+       suit = identifySuit(Math.floor(this.hand[c]/13));
+      string += `${card} ${suit}   `
+  }
+  return string
+  }
+      
+  fold(){
+    let sum = 0;
+    console.log( find(this.hand, sum));
+  }
+
+
+
+} 
+
+function    find(array, sum){
+  if (array.length != 0) {
+    var card = array.pop();
+    if (card%13 == 1) {
+      return find(array, sum+ 11) || find(array, sum+ 1);
+    }
+    else {
+      return find(array, sum+card%13s);
+    }
+  } else {
+    if(sum < 21){
+      return sum;
+    }else{
+      return null;
+    }
+  }
+}
+ 
   let deck={};
   deck.draw = function() {
     card = Math.floor(Math.random()*52);
@@ -43,44 +89,6 @@
   }
   }
 
-  var player = class player {
-  constructor() {
-  this.hand = [];
-  }
-  hit() {
-  card = deck.draw();
-  this.hand[this.hand.length]= card;
-  var c;
-  var string ="";
-  var suit;
-  var card;
-  
-    for (c in this.hand) {
-       card = identifyCard(this.hand[c]%13);
-       suit = identifySuit(Math.floor(this.hand[c]/13));
-      string += `${card} ${suit}   `
-  }
-  return string
-  }
-      
-  fold(array){
-      function find(array, sum){
-	if (array.length != 0) {
-	var card = array.pop();
-	if (card == 1) {
-	    return find(array, sum+ 11) || find(array, sum+ 1);
-	}
-	else {
-	    return find(array, sum+card);
-	}
-	}
-	else {
-	    return sum;
-	}
-      }
-      return find(array, 0);
-  }
-  }
 
 
   let player1 = new player();
