@@ -1,0 +1,4 @@
+Make Dealer
+Allow Spliting
+Change Fold button to Stay
+Add an actual fold button
