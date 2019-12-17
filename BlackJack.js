@@ -10,16 +10,16 @@ deck.draw = function () {
 function identifyCard (card) {
   switch (card) {
     case 0:
-      return 'King'
+      return 'K'
       break
     case 1:
-      return 'Ace'
+      return 'A'
       break
     case 11:
-      return 'Jack'
+      return 'J'
       break
     case 12:
-      return 'Queen'
+      return 'Q'
       break
     default:
       return card
@@ -45,9 +45,20 @@ function identifySuit (suit) {
 }
 
 var Player = class Player {
-  constructor () {
-    this.hand = []
+
+  constructor (startingCard) {
+    if (startingCard == null){
+      this.hand = []
+      this.hit()
+    }else{
+      this.hand = [startingCard]
+    }
     this.playerNum = NextPlayerNumber()
+    let handId = "hand" + this.playerNum
+    document.getElementById(handId).innerHTML = this.hit();
+
+    console.log(this.hand)
+    this.checkDouble();
   }
 
   hit () {
@@ -61,7 +72,7 @@ var Player = class Player {
     for (c in this.hand) {
       cardVal = identifyCard(this.hand[c] % 13)
       suit = identifySuit(Math.floor(this.hand[c] / 13))
-      string += `${cardVal} ${suit}   `
+      string += `<span><p>${suit}</p><p>${cardVal}</p><p>${suit}</p></span>`
     }
     return string
   }
@@ -69,6 +80,58 @@ var Player = class Player {
   stay () {
     const score = find(this.hand, 0)
     checkWin(score, this.playerNum)
+  }
+
+  split(){
+    console.log(this.playerNum)
+    console.log(this.hand)
+    
+    let playerId = "player" + this.playerNum
+    let playerTag = document.getElementById(playerId)
+
+    let playerDiv = document.createElement('div')
+
+    let hand = document.createElement('div')
+    hand.classList.add("hand")
+
+    let playerBtns = document.createElement('div')
+
+
+    let hit = document.createElement('button')
+    let stay = document.createElement('button')
+
+    hit.appendChild(document.createTextNode('Hit Me!'))
+    stay.appendChild(document.createTextNode('Stay.'))
+
+    playerBtns.appendChild(hit)
+    playerBtns.appendChild(stay)
+    
+    playerDiv.appendChild(hand)
+    playerDiv.appendChild(playerBtns)
+    playerTag.appendChild(playerDiv)
+
+    let splitCard = this.hand.pop()
+    let splitPlayer = new Player(splitCard)
+
+    playerDiv.id = `player${splitPlayer.playerNum}`
+    playerBtns.id = `player${splitPlayer.playerNum}-btns`
+    hand.id = `hand${splitPlayer.playerNum}`
+
+    
+  }
+
+  checkDouble (card) {
+    let firstcard = identifyCard(this.hand[0] % 13);
+    let secondcard = identifyCard(this.hand[1] % 13);
+    if(firstcard === secondcard){
+      let btnsTag = "player" + this.playerNum + "-btns"
+      console.log(btnsTag)
+      let btns = document.getElementById(btnsTag)
+      let split = document.createElement("button")
+      split.onclick = this.split
+      split.appendChild(document.createTextNode("Split"))
+      btns.appendChild(split)
+    }
   }
 }
 
@@ -120,14 +183,17 @@ function NextPlayerNumber () {
   return currentplayerNumber++
 }
 
-const player1 = new Player()
-const player2 = new Player()
+const player1 = new Player(null)
+const player2 = new Player(null)
 
 document.getElementById('hit1').onclick = function () {
   document.getElementById('hand1').innerHTML = player1.hit()
 }
 document.getElementById('stay1').onclick = function () {
   player1.stay()
+}
+document.getElementById('split').onclick = function(){
+  player1.split()
 }
 
 document.getElementById('hit2').onclick = function () {
