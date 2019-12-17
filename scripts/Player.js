@@ -1,5 +1,5 @@
 
-const numberOfPlayers = 2
+let numberOfPlayers = 2
 const scores = {}
 const deck = {}
 deck.draw = function () {
@@ -56,6 +56,7 @@ class Player {
     }
   
     split(){
+      numberOfPlayers++
       let playerId = "player" + this.playerNum
       console.log(playerId)
       let playerTag = document.getElementById(playerId)
@@ -222,7 +223,11 @@ class Player {
         } else if (scores[player] > winningScore) {
           winner = player
           winningScore = scores[player]
-          document.getElementById('win').innerHTML = `Player ${winner} wins! <button type="button" onclick="location.reload()">Play Again?</button>`
+          if (player > 2){
+            document.getElementById('win').innerHTML = `Player with ${scores[player]} wins! <button type="button" onclick="location.reload()">Play Again?</button>`
+          } else {
+          document.getElementById('win').innerHTML = `Player ${player} wins! <button type="button" onclick="location.reload()">Play Again?</button>`
+          }
         }
       }
     }
