@@ -55,7 +55,10 @@ var Player = class Player {
     }
     this.playerNum = NextPlayerNumber()
     let handId = "hand" + this.playerNum
-    document.getElementById(handId).innerHTML = this.hit();
+    let handElement = document.getElementById(handId)
+    if(handElement != null){
+      handElement.innerHTML = this.hit();
+    }
 
     console.log(this.hand)
     this.checkDouble();
@@ -83,9 +86,6 @@ var Player = class Player {
   }
 
   split(){
-    console.log(this.playerNum)
-    console.log(this.hand)
-    
     let playerId = "player" + this.playerNum
     let playerTag = document.getElementById(playerId)
 
@@ -95,7 +95,6 @@ var Player = class Player {
     hand.classList.add("hand")
 
     let playerBtns = document.createElement('div')
-
 
     let hit = document.createElement('button')
     let stay = document.createElement('button')
@@ -110,14 +109,52 @@ var Player = class Player {
     playerDiv.appendChild(playerBtns)
     playerTag.appendChild(playerDiv)
 
+    playerDiv.id = `PLAYERDIV`
+    playerBtns.id = `PLAYERBTNS`
+    hand.id = `HAND`
+    hit.id = 'HIT'
+    stay.id = 'STAY'
+
     let splitCard = this.hand.pop()
     let splitPlayer = new Player(splitCard)
+    let cardVal, suit, string = ""
+    for (let c in this.hand) {
+      cardVal = identifyCard(this.hand[c] % 13)
+      suit = identifySuit(Math.floor(this.hand[c] / 13))
+      string += `<span><p>${suit}</p><p>${cardVal}</p><p>${suit}</p></span>`
+    }
+    document.getElementById(`hand${this.playerNum}`).innerHTML = string
+    document.getElementById("split").remove()
 
-    playerDiv.id = `player${splitPlayer.playerNum}`
-    playerBtns.id = `player${splitPlayer.playerNum}-btns`
-    hand.id = `hand${splitPlayer.playerNum}`
+    let playerXDiv = document.getElementById('PLAYERDIV')
+    let playerXBtns = document.getElementById('PLAYERBTNS')
+    let playerXHand = document.getElementById("HAND")
+    let playerXHit = document.getElementById("HIT")
+    let playerXStay = document.getElementById('STAY')
 
-    
+    playerXDiv.id = `player${splitPlayer.playerNum}`
+    playerXBtns.id = `player${splitPlayer.playerNum}-btns`
+    playerXHand.id = `hand${splitPlayer.playerNum}`
+    playerXHit.id = `hit${splitPlayer.playerNum}`
+    playerXStay.id = `stay${splitPlayer.playerNum}`
+
+    //Display card for playerX
+    string = ""
+    for (let c in splitPlayer.hand) {
+      cardVal = identifyCard(splitPlayer.hand[c] % 13)
+      suit = identifySuit(Math.floor(splitPlayer.hand[c] / 13))
+      string += `<span><p>${suit}</p><p>${cardVal}</p><p>${suit}</p></span>`
+    }
+    console.log(playerXHand)
+    playerXHand.innerHTML = string
+
+    //Map Buttons
+    playerXHit.onclick = function () {
+      document.getElementById(`hand${splitPlayer.playerNum}`).innerHTML = splitPlayer.hit()
+    }
+    playerXStay.onclick = function (){
+      splitPlayer.stay()
+    }
   }
 
   checkDouble (card) {
@@ -130,6 +167,7 @@ var Player = class Player {
       let split = document.createElement("button")
       split.onclick = this.split
       split.appendChild(document.createTextNode("Split"))
+      split.id = "split"
       btns.appendChild(split)
     }
   }

@@ -1,3 +1,9 @@
 Make Dealer
-Allow Spliting
+Fix on splitting so all players have to stay
+Add auto win for blackjack
+Fix on splitting so it says player 1 or 2 wins not player 3
 make cards look like cards
+
+  <button type="button" id="split">
+    asdfhods
+  </button>
