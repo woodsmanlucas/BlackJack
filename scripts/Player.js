@@ -51,7 +51,7 @@ class Player {
     }
   
     stay () {
-      const score = find(this.hand, 0)
+      const score = find(this.hand, 0, 0)
       checkWin(score, this.playerNum)
     }
   
@@ -186,18 +186,20 @@ class Player {
   }
   
   
-  function find (array, sum) {
+  function find (array, sum, index) {
     console.log(`The array is ${array} The sum is ${sum}`)
-    if (array.length != 0) {
-      var card = array.pop()
+    if (array.length > index) {
+      // this could be the bug
+      var card = array[index]
+      index++
       const cardVal = card % 13
       if (cardVal == 1) {
-        return find(array, sum + 11) || find(array, sum + 1)
+        return find(array, sum + 11, index) || find(array, sum + 1, index)
       } else if (cardVal == 0 || cardVal == 11 || cardVal == 12) {
         // if the card is a King, Jack or Queen it is worth 10
-        return find(array, sum + 10)
+        return find(array, sum + 10, index)
       } else {
-        return find(array, sum + cardVal)
+        return find(array, sum + cardVal, index)
       }
     } else {
       if (sum <= 21) {
@@ -209,10 +211,9 @@ class Player {
   }
   
   function checkWin (score, player) {
-    console.log(scores)
-    const length = Object.keys(scores).length + 1
-    console.log(length)
     scores[player] = score
+    console.log(scores)
+    const length = Object.keys(scores).length
   
     if (length >= numberOfPlayers) {
       let winner = null
